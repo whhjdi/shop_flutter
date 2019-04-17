@@ -37,8 +37,32 @@ class _IndexPageState extends State<IndexPage> {
     CartPage(),
     UserPage(),
   ];
+
+  int currentIndex = 0;
+  var currentPage;
+
+  @override
+  void initState() {
+    currentPage = tabContent[currentIndex];
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      backgroundColor: Colors.grey[100],
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        items: bottomTabs,
+        currentIndex: currentIndex,
+        onTap: (index) {
+          setState(() {
+            currentIndex = index;
+            currentPage = tabContent[currentIndex];
+          });
+        },
+      ),
+      body: currentPage,
+    );
   }
 }
