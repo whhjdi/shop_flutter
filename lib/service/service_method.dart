@@ -3,15 +3,17 @@ import 'dart:async';
 import 'dart:io';
 import '../config/service_url.dart';
 
-//获取首页
-Future getHomePage() async {
+Future request(url, {formData}) async {
   try {
     Response response;
     Dio dio = new Dio();
     dio.options.contentType =
         ContentType.parse("application/x-www-form-urlencoded");
-    var formData = {'lon': '115.02133', 'lat': '35.76123'};
-    response = await dio.post(servicePath['homePage'], data: formData);
+    if (formData == null) {
+      response = await dio.post(url);
+    } else {
+      response = await dio.post(url, data: formData);
+    }
     if (response.statusCode == 200) {
       return response.data;
     } else {
@@ -21,4 +23,26 @@ Future getHomePage() async {
   } catch (err) {
     return print(err);
   }
+}
+
+//获取首页
+Future getHomePage() async {
+  var formData = {'lon': '115.02133', 'lat': '35.76123'};
+  var url = servicePath['homePage'];
+  var res = await request(url, formData: formData);
+  return res;
+}
+
+//热卖
+Future getHomePageHot(formData) async {
+  var url = servicePath['homePageHot'];
+  var res = await request(url, formData: formData);
+  return res;
+}
+
+//分类
+Future getCategoryPage() async {
+  var url = servicePath['categoryPage'];
+  var res = await request(url);
+  return res;
 }
