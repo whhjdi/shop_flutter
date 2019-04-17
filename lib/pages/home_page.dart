@@ -4,14 +4,22 @@ import 'dart:convert';
 
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,16 +36,18 @@ class _HomePageState extends State<HomePage> {
                 List<Map> swiper = (newData['slides'] as List).cast();
                 List<Map> navList = (newData['category'] as List).cast();
                 String adPic = newData['advertesPicture']['PICTURE_ADDRESS'];
-                String leaderImage = newData['shopInfo']['leaderImage'];
-                String leaderPhone = newData['shopInfo']['leaderPhone'];
-
-                return Column(
-                  children: <Widget>[
-                    MySwiper(swiperList: swiper),
-                    TopNav(navList: navList),
-                    AdBanner(adPic: adPic),
-                    Contact(leaderImage: leaderImage, leaderPhone: leaderPhone)
-                  ],
+                List recommendList = (newData['recommend'] as List).cast();
+                return SingleChildScrollView(
+                  child: Column(
+                    children: <Widget>[
+                      MySwiper(swiperList: swiper),
+                      TopNav(navList: navList),
+                      AdBanner(adPic: adPic),
+                      Recommend(
+                        recommendList: recommendList,
+                      ),
+                    ],
+                  ),
                 );
               } else {
                 return Center(
@@ -123,29 +133,81 @@ class AdBanner extends StatelessWidget {
   }
 }
 
-class Contact extends StatelessWidget {
-  final String leaderImage;
-  final String leaderPhone;
+class Recommend extends StatelessWidget {
+  final List recommendList;
+  Recommend({Key key, this.recommendList}) : super(key: key);
 
-  Contact({Key key, this.leaderImage, this.leaderPhone}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _titleWidget() {
     return Container(
-      child: InkWell(
-        onTap: _launcherUrl,
-        child: Image.network(leaderImage),
+      alignment: Alignment.centerLeft,
+      padding: EdgeInsets.fromLTRB(10.0, 2.0, 0, 2.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border(
+          bottom: BorderSide(width: 0.5, color: Colors.black12),
+        ),
+      ),
+      child: Text('商品推荐',
+          style: TextStyle(
+            color: Colors.red,
+          )),
+    );
+  }
+
+  Widget _recommendList() {
+    return Container(
+      height: ScreenUtil.getInstance().setHeight(280.0),
+      margin: EdgeInsets.only(top: 5.0),
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: recommendList.length,
+        itemBuilder: (context, index) {
+          return _item(index);
+        },
       ),
     );
   }
 
-  void _launcherUrl() async {
-    print(leaderPhone);
-    String url = 'tel:' + leaderPhone;
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw '无效的url';
-    }
+  Widget _item(index) {
+    return InkWell(
+      onTap: () {},
+      child: Container(
+        height: ScreenUtil.getInstance().setHeight(280.0),
+        width: ScreenUtil.getInstance().setWidth(250.0),
+        padding: EdgeInsets.all(5.0),
+        decoration: BoxDecoration(
+            color: Colors.white24,
+            border: Border(
+              left: BorderSide(width: 0.5, color: Colors.black12),
+            )),
+        child: Column(
+          children: <Widget>[
+            Image.network(recommendList[index]['image']),
+            Text('￥${recommendList[index]['mallPrice']}'),
+            Text(
+              '￥${recommendList[index]['price']}',
+              style: TextStyle(
+                decoration: TextDecoration.lineThrough,
+                color: Colors.grey,
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: ScreenUtil.getInstance().setHeight(350),
+      margin: EdgeInsets.only(top: 10.0),
+      child: Column(
+        children: <Widget>[
+          _titleWidget(),
+          _recommendList(),
+        ],
+      ),
+    );
   }
 }

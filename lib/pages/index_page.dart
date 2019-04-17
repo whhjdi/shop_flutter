@@ -32,7 +32,7 @@ class _IndexPageState extends State<IndexPage> {
     )
   ];
 
-  final List tabContent = [
+  final List<Widget> tabContent = [
     HomePage(),
     CategoryPage(),
     CartPage(),
@@ -52,19 +52,21 @@ class _IndexPageState extends State<IndexPage> {
   Widget build(BuildContext context) {
     ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
     return Scaffold(
-      backgroundColor: Colors.grey[100],
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        items: bottomTabs,
-        currentIndex: currentIndex,
-        onTap: (index) {
-          setState(() {
-            currentIndex = index;
-            currentPage = tabContent[currentIndex];
-          });
-        },
-      ),
-      body: currentPage,
-    );
+        backgroundColor: Colors.grey[100],
+        bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          items: bottomTabs,
+          currentIndex: currentIndex,
+          onTap: (index) {
+            setState(() {
+              currentIndex = index;
+              currentPage = tabContent[currentIndex];
+            });
+          },
+        ),
+        body: IndexedStack(
+          index: currentIndex,
+          children: tabContent,
+        ));
   }
 }
