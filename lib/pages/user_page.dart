@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provide/provide.dart';
+import '../provide/counter.dart';
 
 class UserPage extends StatefulWidget {
   @override
@@ -10,7 +12,18 @@ class _UserPageState extends State<UserPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text('我的'),
+        child: NumberP(),
+      ),
+    );
+  }
+}
+
+class NumberP extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Provide<Counter>(
+        builder: (context, child, counter) => Text('${counter.value}'),
       ),
     );
   }

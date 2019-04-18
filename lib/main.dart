@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
 import './pages/index_page.dart';
+import 'package:provide/provide.dart';
+import './provide/counter.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  final providers = Providers()
+    ..provide(Provider.function((context) => Counter(0)));
+
+  runApp(ProviderNode(
+    providers: providers,
+    child: MyApp(),
+  ));
+}
 
 class MyApp extends StatelessWidget {
   @override
