@@ -195,9 +195,16 @@ class MySwiper extends StatelessWidget {
       width: ScreenUtil.getInstance().setWidth(750.0),
       child: Swiper(
         itemBuilder: (BuildContext context, int index) {
-          return new Image.network(
-            "${swiperList[index]['image']}",
-            fit: BoxFit.fill,
+          return new InkWell(
+            child: Image.network(
+              "${swiperList[index]['image']}",
+              fit: BoxFit.fill,
+            ),
+            onTap: () {
+              Application.router.navigateTo(
+                  context, "/detail?id=${swiperList[index]['goodsId']}",
+                  transition: TransitionType.fadeIn);
+            },
           );
         },
         itemCount: swiperList.length,
@@ -287,15 +294,19 @@ class Recommend extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemCount: recommendList.length,
         itemBuilder: (context, index) {
-          return _item(index);
+          return _item(context, index);
         },
       ),
     );
   }
 
-  Widget _item(index) {
+  Widget _item(BuildContext context, index) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Application.router.navigateTo(
+            context, "/detail?id=${recommendList[index]['goodsId']}",
+            transition: TransitionType.fadeIn);
+      },
       child: Container(
         height: ScreenUtil.getInstance().setHeight(350.0),
         width: ScreenUtil.getInstance().setWidth(250.0),
@@ -357,39 +368,45 @@ class FloorProduct extends StatelessWidget {
     return Container(
       child: Column(
         children: <Widget>[
-          _firstRow(),
-          secondRow(),
+          _firstRow(context),
+          secondRow(context),
         ],
       ),
     );
   }
 
-  Widget _productItem(Map product) {
+  Widget _productItem(BuildContext context, Map product) {
     return Container(
       width: ScreenUtil.getInstance().setWidth(375.0),
-      child: InkWell(onTap: () {}, child: Image.network(product['image'])),
+      child: InkWell(
+          onTap: () {
+            Application.router.navigateTo(
+                context, "/detail?id=${product['goodsId']}",
+                transition: TransitionType.fadeIn);
+          },
+          child: Image.network(product['image'])),
     );
   }
 
-  Widget _firstRow() {
+  Widget _firstRow(context) {
     return Row(
       children: <Widget>[
-        _productItem(productList[0]),
+        _productItem(context, productList[0]),
         Column(
           children: <Widget>[
-            _productItem(productList[1]),
-            _productItem(productList[2]),
+            _productItem(context, productList[1]),
+            _productItem(context, productList[2]),
           ],
         ),
       ],
     );
   }
 
-  Widget secondRow() {
+  Widget secondRow(context) {
     return Row(
       children: <Widget>[
-        _productItem(productList[3]),
-        _productItem(productList[4]),
+        _productItem(context, productList[3]),
+        _productItem(context, productList[4]),
       ],
     );
   }

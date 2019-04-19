@@ -39,7 +39,7 @@ class _IndexPageState extends State<IndexPage> {
     UserPage(),
   ];
 
-  int currentIndex = 1;
+  int currentIndex = 0;
   var currentPage;
 
   @override

@@ -53,3 +53,10 @@ Future getMallGoods(formData) async {
   var res = await request(url, formData: formData);
   return res;
 }
+
+//商品详情
+Future getGoodsDetail(formData) async {
+  var url = servicePath['goodsDetail'];
+  var res = await request(url, formData: formData);
+  return res;
+}
