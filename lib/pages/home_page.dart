@@ -5,6 +5,8 @@ import 'dart:convert';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
+import 'package:fluro/fluro.dart';
+import '../router/application.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -80,7 +82,6 @@ class _HomePageState extends State<HomePage>
                     _hotGoods(),
                   ],
                 ),
-                onRefresh: () async {},
                 loadMore: () async {
                   _getHotGoods();
                 },
@@ -119,7 +120,11 @@ class _HomePageState extends State<HomePage>
     if (hotGoodsList.length != 0) {
       List<Widget> listWidget = hotGoodsList.map((hotGood) {
         return InkWell(
-          onTap: () {},
+          onTap: () {
+            Application.router.navigateTo(
+                context, "/detail?id=${hotGood['goodsId']}",
+                transition: TransitionType.fadeIn);
+          },
           child: Container(
             width: ScreenUtil.getInstance().setWidth(372),
             color: Colors.white,
@@ -230,7 +235,7 @@ class TopNav extends StatelessWidget {
     }
 
     return Container(
-      height: ScreenUtil.getInstance().setHeight(250.0),
+      height: ScreenUtil.getInstance().setHeight(300.0),
       padding: EdgeInsets.all(5.0),
       child: GridView.count(
         physics: NeverScrollableScrollPhysics(),
@@ -276,7 +281,7 @@ class Recommend extends StatelessWidget {
 
   Widget _recommendList() {
     return Container(
-      height: ScreenUtil.getInstance().setHeight(280.0),
+      height: ScreenUtil.getInstance().setHeight(350.0),
       margin: EdgeInsets.only(top: 5.0),
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
@@ -292,7 +297,7 @@ class Recommend extends StatelessWidget {
     return InkWell(
       onTap: () {},
       child: Container(
-        height: ScreenUtil.getInstance().setHeight(280.0),
+        height: ScreenUtil.getInstance().setHeight(350.0),
         width: ScreenUtil.getInstance().setWidth(250.0),
         padding: EdgeInsets.all(5.0),
         decoration: BoxDecoration(
@@ -320,7 +325,7 @@ class Recommend extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: ScreenUtil.getInstance().setHeight(350),
+      height: ScreenUtil.getInstance().setHeight(440),
       margin: EdgeInsets.only(top: 10.0),
       child: Column(
         children: <Widget>[

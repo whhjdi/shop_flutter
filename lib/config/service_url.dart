@@ -4,5 +4,6 @@ const servicePath = {
   'homePage': serviceUrl + 'wxmini/homePageContent',
   //热卖
   'homePageHot': serviceUrl + 'wxmini/homePageBelowConten',
-  'categoryPage': serviceUrl + 'wxmini/getCategory'
+  'categoryPage': serviceUrl + 'wxmini/getCategory',
+  'mallGoods': serviceUrl + 'wxmini/getMallGoods'
 };

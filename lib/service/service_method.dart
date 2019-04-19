@@ -46,3 +46,10 @@ Future getCategoryPage() async {
   var res = await request(url);
   return res;
 }
+
+//分类商品
+Future getMallGoods(formData) async {
+  var url = servicePath['mallGoods'];
+  var res = await request(url, formData: formData);
+  return res;
+}
