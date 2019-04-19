@@ -3,6 +3,7 @@ import 'package:provide/provide.dart';
 import '../../provide/detail_info.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../provide/cart.dart';
+import '../../router/application.dart';
 
 class DetailBottom extends StatelessWidget {
   @override
@@ -21,7 +22,9 @@ class DetailBottom extends StatelessWidget {
       child: Row(
         children: <Widget>[
           InkWell(
-            onTap: () {},
+            onTap: () {
+              Application.router.navigateTo(context, '/');
+            },
             child: Container(
               width: ScreenUtil.getInstance().setWidth(110),
               alignment: Alignment.center,
