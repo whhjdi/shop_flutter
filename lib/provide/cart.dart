@@ -74,6 +74,7 @@ class CartProvide with ChangeNotifier {
         if (item['isCheck']) {
           allPrice += (item['count'] * item['price']);
           allGoodsCount += item['count'];
+          print('数量变为${allGoodsCount}');
         } else {
           print('没有全选');
           allChecked = false;
@@ -122,12 +123,6 @@ class CartProvide with ChangeNotifier {
 
     //存
     tempList[changeIndex] = cartItem.toJson();
-    allChecked = tempList.every((item) {
-      print('是否选中${item}');
-      return item['isCheck'];
-    });
-    print('判断是否应该全选');
-    print(allChecked);
     cartString = json.encode(tempList).toString();
     await prefs.setString('cartInfo', cartString);
     await getCartInfo();
@@ -138,15 +133,12 @@ class CartProvide with ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     cartString = prefs.getString('cartInfo');
     List<Map> tempList = (json.decode(cartString.toString()) as List).cast();
-    print('change all check');
     List<Map> newList = [];
     for (var item in tempList) {
       var newItem = item;
       newItem['isCheck'] = val;
       newList.add(newItem);
     }
-    print('是否全选');
-    print(val);
     cartString = json.encode(newList).toString(); //形成字符串
     await prefs.setString('cartInfo', cartString); //进行持久化
     await getCartInfo();
@@ -170,9 +162,12 @@ class CartProvide with ChangeNotifier {
     } else if (cartItem.count > 1) {
       cartItem.count--;
     }
+
     tempList[changeIndex] = cartItem.toJson();
     cartString = json.encode(tempList).toString();
     prefs.setString('cartInfo', cartString); //
+    print('改变数量');
     await getCartInfo();
+    print('数量改变完成');
   }
 }

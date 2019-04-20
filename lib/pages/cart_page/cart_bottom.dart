@@ -42,28 +42,29 @@ class CartBottom extends StatelessWidget {
   }
 
   Widget allPrice(BuildContext context) {
-    double allPrice = Provide.value<CartProvide>(context).allPrice;
     return Expanded(
       child: Column(
         children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              Container(
-                alignment: Alignment.centerRight,
-                child: Text('合计:',
-                    style: TextStyle(fontSize: ScreenUtil().setSp(30))),
-              ),
-              Container(
-                alignment: Alignment.centerLeft,
-                child: Text('￥${allPrice}',
-                    style: TextStyle(
-                      fontSize: ScreenUtil().setSp(30),
-                      color: Colors.red,
-                    )),
-              )
-            ],
-          ),
+          Provide<CartProvide>(builder: (context, child, provide) {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                Container(
+                  alignment: Alignment.centerRight,
+                  child: Text('合计:',
+                      style: TextStyle(fontSize: ScreenUtil().setSp(30))),
+                ),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: Text('￥${provide.allPrice}',
+                      style: TextStyle(
+                        fontSize: ScreenUtil().setSp(30),
+                        color: Colors.red,
+                      )),
+                )
+              ],
+            );
+          }),
           Container(
             width: ScreenUtil().setWidth(430),
             alignment: Alignment.centerRight,
@@ -79,7 +80,6 @@ class CartBottom extends StatelessWidget {
   }
 
   Widget payBtn(BuildContext context) {
-    int allGoodsCount = Provide.value<CartProvide>(context).allGoodsCount;
     return Container(
       width: ScreenUtil().setWidth(160),
       padding: EdgeInsets.only(left: 10),
@@ -90,9 +90,13 @@ class CartBottom extends StatelessWidget {
           alignment: Alignment.center,
           decoration: BoxDecoration(
               color: Colors.red, borderRadius: BorderRadius.circular(3.0)),
-          child: Text(
-            '结算(${allGoodsCount})',
-            style: TextStyle(color: Colors.white),
+          child: Provide<CartProvide>(
+            builder: (context, child, provide) {
+              return Text(
+                '结算(${provide.allGoodsCount})',
+                style: TextStyle(color: Colors.white),
+              );
+            },
           ),
         ),
       ),

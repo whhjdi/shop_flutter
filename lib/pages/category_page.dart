@@ -9,6 +9,7 @@ import '../provide/category_child.dart';
 import '../provide/category_goods.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import '../router/application.dart';
 
 class CategoryPage extends StatefulWidget {
   @override
@@ -319,7 +320,12 @@ class _CategoryGoodsState extends State<CategoryGoods> {
 
   Widget _goodsDetail(goodsList, index) {
     return InkWell(
-        onTap: () {},
+        onTap: () {
+          Application.router.navigateTo(
+            context,
+            "/detail?id=${goodsList[index].goodsId}",
+          );
+        },
         child: Container(
           padding: EdgeInsets.all(5.0),
           decoration: BoxDecoration(
