@@ -50,7 +50,6 @@ class CartProvide with ChangeNotifier {
 
     cartString = json.encode(tempList).toString();
     await prefs.setString('cartInfo', cartString);
-    print('save success');
     notifyListeners();
   }
 
@@ -71,14 +70,11 @@ class CartProvide with ChangeNotifier {
       allPrice = 0;
       allGoodsCount = 0;
       allChecked = true;
-      print(tempList);
       tempList.forEach((item) {
         if (item['isCheck']) {
           allPrice += (item['count'] * item['price']);
           allGoodsCount += item['count'];
-          print('数量变为${allGoodsCount}');
         } else {
-          print('没有全选');
           allChecked = false;
         }
         cartList.add(CartModel.fromJson(item));
@@ -113,7 +109,7 @@ class CartProvide with ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     cartString = prefs.getString('cartInfo');
     List<Map> tempList = (json.decode(cartString.toString()) as List).cast();
-    print('change check');
+
     int tempIndex = 0;
     int changeIndex = 0;
     tempList.forEach((item) {
@@ -168,8 +164,6 @@ class CartProvide with ChangeNotifier {
     tempList[changeIndex] = cartItem.toJson();
     cartString = json.encode(tempList).toString();
     prefs.setString('cartInfo', cartString); //
-    print('改变数量');
     await getCartInfo();
-    print('数量改变完成');
   }
 }

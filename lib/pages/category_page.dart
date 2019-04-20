@@ -250,7 +250,7 @@ class _CategoryGoodsState extends State<CategoryGoods> {
             scrollController.jumpTo(0.0);
           }
         } catch (err) {
-          print('${err}');
+          throw Error();
         }
 
         if (currentCategoryGoods.categoryGoods.length > 0) {

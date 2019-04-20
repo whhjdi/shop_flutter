@@ -17,11 +17,10 @@ Future request(url, {formData}) async {
     if (response.statusCode == 200) {
       return response.data;
     } else {
-      print('失败');
       throw Exception('请求失败');
     }
   } catch (err) {
-    return print(err);
+    throw Exception(err);
   }
 }
 

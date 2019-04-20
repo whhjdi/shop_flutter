@@ -81,7 +81,7 @@ class CartBottom extends StatelessWidget {
 
   Widget payBtn(BuildContext context) {
     return Container(
-      width: ScreenUtil().setWidth(160),
+      width: ScreenUtil().setWidth(180),
       padding: EdgeInsets.only(left: 10),
       child: InkWell(
         onTap: () {},
