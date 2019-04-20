@@ -9,6 +9,7 @@ import './router/application.dart';
 import './router/routes.dart';
 import './provide/detail_info.dart';
 import './provide/cart.dart';
+import './provide/index.dart';
 
 void main() {
   final providers = Providers()
@@ -16,6 +17,7 @@ void main() {
     ..provide(Provider.function((context) => CategoryGoodsListProvide()))
     ..provide(Provider.function((context) => DetailInfoProvide()))
     ..provide(Provider.function((context) => CartProvide()))
+    ..provide(Provider.function((context) => CurrentIndexProvide()))
     ..provide(Provider.function((context) => Counter(0)));
 
   runApp(ProviderNode(

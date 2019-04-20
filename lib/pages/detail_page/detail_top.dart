@@ -7,9 +7,8 @@ class DetailTop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Provide<DetailInfoProvide>(
-      builder: (context, child, goodsInfo) {
-        var goodsInfo =
-            Provide.value<DetailInfoProvide>(context).goodsInfo.data.goodInfo;
+      builder: (context, child, provide) {
+        var goodsInfo = provide.goodsInfo.data.goodInfo;
         if (goodsInfo != null) {
           return Container(
             color: Colors.white,

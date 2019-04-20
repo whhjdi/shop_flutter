@@ -7,8 +7,8 @@ class DetailTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Provide<DetailInfoProvide>(
-      builder: (context, child, data) {
-        var isLeft = Provide.value<DetailInfoProvide>(context).isLeft;
+      builder: (context, child, provide) {
+        var isLeft = provide.isLeft;
         return Container(
           margin: EdgeInsets.only(top: 10.0),
           child: Row(

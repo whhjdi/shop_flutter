@@ -13,8 +13,8 @@ class DetailWebview extends StatelessWidget {
         .goodInfo
         .goodsDetail;
     return Provide<DetailInfoProvide>(
-      builder: (context, child, val) {
-        var isLeft = Provide.value<DetailInfoProvide>(context).isLeft;
+      builder: (context, child, provide) {
+        var isLeft = provide.isLeft;
         if (isLeft) {
           return Container(
             child: Html(data: goodsDetails),

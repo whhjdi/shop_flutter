@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provide/provide.dart';
+import '../../provide/cart.dart';
+import '../../model/cart_model.dart';
 
 class CartCount extends StatelessWidget {
+  CartModel item;
+  CartCount(this.item);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -11,48 +16,43 @@ class CartCount extends StatelessWidget {
           BoxDecoration(border: Border.all(width: 1, color: Colors.black12)),
       child: Row(
         children: <Widget>[
-          _reduceBtn(),
+          _reduceBtn(context, item),
           _countArea(),
-          _addBtn(),
+          _addBtn(context, item),
         ],
       ),
     );
   }
 
-  Widget _reduceBtn() {
+  Widget _reduceBtn(context, item) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Provide.value<CartProvide>(context).addOrReduceCount(item, 'reduce');
+      },
       child: Container(
         width: ScreenUtil().setWidth(45),
         height: ScreenUtil().setHeight(45),
         alignment: Alignment.center,
         decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border(
-                right: BorderSide(
-              width: 1,
-              color: Colors.black12,
-            ))),
+            color: item.count > 1 ? Colors.white : Colors.black12,
+            border: Border(right: BorderSide(width: 1, color: Colors.black12))),
         child: Text('-'),
       ),
     );
   }
 
-  Widget _addBtn() {
+  Widget _addBtn(context, item) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Provide.value<CartProvide>(context).addOrReduceCount(item, 'add');
+      },
       child: Container(
         width: ScreenUtil().setWidth(45),
         height: ScreenUtil().setHeight(45),
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: Colors.white,
-          border: Border(
-            left: BorderSide(
-              width: 1,
-              color: Colors.black12,
-            ),
-          ),
+          border: Border(left: BorderSide(width: 1, color: Colors.black12)),
         ),
         child: Text('+'),
       ),
@@ -66,7 +66,7 @@ class CartCount extends StatelessWidget {
       height: ScreenUtil().setHeight(45),
       alignment: Alignment.center,
       color: Colors.white,
-      child: Text('1'),
+      child: Text('${item.count}'),
     );
   }
 }

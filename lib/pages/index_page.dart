@@ -5,14 +5,12 @@ import './home_page.dart';
 import './category_page.dart';
 import './cart_page.dart';
 import './user_page.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provide/provide.dart';
+import '../provide/index.dart';
 
-class IndexPage extends StatefulWidget {
-  @override
-  _IndexPageState createState() => _IndexPageState();
-}
-
-class _IndexPageState extends State<IndexPage> {
+class IndexPage extends StatelessWidget {
   final List<BottomNavigationBarItem> bottomTabs = [
     BottomNavigationBarItem(
       icon: Icon(CupertinoIcons.home),
@@ -39,34 +37,27 @@ class _IndexPageState extends State<IndexPage> {
     UserPage(),
   ];
 
-  int currentIndex = 0;
-  var currentPage;
-
-  @override
-  void initState() {
-    currentPage = tabContent[currentIndex];
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
-    return Scaffold(
-        backgroundColor: Colors.grey[100],
-        bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          items: bottomTabs,
-          currentIndex: currentIndex,
-          onTap: (index) {
-            setState(() {
-              currentIndex = index;
-              currentPage = tabContent[currentIndex];
-            });
-          },
-        ),
-        body: IndexedStack(
-          index: currentIndex,
-          children: tabContent,
-        ));
+    return Provide<CurrentIndexProvide>(
+      builder: (context, child, provide) {
+        int currentIndex = provide.currentIndex;
+        return Scaffold(
+            backgroundColor: Colors.grey[100],
+            bottomNavigationBar: BottomNavigationBar(
+              type: BottomNavigationBarType.fixed,
+              items: bottomTabs,
+              currentIndex: currentIndex,
+              onTap: (index) {
+                provide.changeIndex(index);
+              },
+            ),
+            body: IndexedStack(
+              index: currentIndex,
+              children: tabContent,
+            ));
+      },
+    );
   }
 }
