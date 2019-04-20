@@ -3,7 +3,6 @@ import 'package:provide/provide.dart';
 import '../../provide/detail_info.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../provide/cart.dart';
-import '../../router/application.dart';
 import '../../provide/index.dart';
 
 class DetailBottom extends StatelessWidget {
@@ -41,8 +40,7 @@ class DetailBottom extends StatelessWidget {
               ),
               Provide<CartProvide>(
                 builder: (context, child, provide) {
-                  int goodsCount =
-                      Provide.value<CartProvide>(context).allGoodsCount;
+                  int goodsCount = provide.allGoodsCount;
                   return Positioned(
                     top: 0,
                     right: 10,

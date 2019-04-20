@@ -27,6 +27,8 @@ class CartProvide with ChangeNotifier {
       if (item['isCheck']) {
         allPrice += (cartList[ival].price * cartList[ival].count);
         allGoodsCount += cartList[ival].count;
+      } else {
+        allChecked = false;
       }
       ival++;
     });
