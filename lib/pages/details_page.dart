@@ -20,7 +20,12 @@ class DetailsPage extends StatelessWidget {
             Navigator.pop(context);
           },
         ),
-        title: Text('商品详情'),
+        title: Text(
+          '商品详情',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.teal,
+        elevation: 0.0,
       ),
       body: FutureBuilder(
         future: _getGoodInfo(context),
@@ -35,7 +40,6 @@ class DetailsPage extends StatelessWidget {
                       DetailExplain(),
                       DetailTabs(),
                       DetailWebview(),
-                      Text('加载完成：${goodsId}'),
                     ],
                   ),
                 ),
